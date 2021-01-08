@@ -13,7 +13,8 @@
 		6179CE861F5EFD6000F1B690 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6179CE841F5EFD6000F1B690 /* Main.storyboard */; };
 		6179CE881F5EFD6000F1B690 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6179CE871F5EFD6000F1B690 /* Assets.xcassets */; };
 		6179CE8B1F5EFD6000F1B690 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6179CE891F5EFD6000F1B690 /* LaunchScreen.storyboard */; };
-		617D3F671F61873B00272919 /* Drone.scn in Resources */ = {isa = PBXBuildFile; fileRef = 617D3F661F61873B00272919 /* Drone.scn */; };
+		EA4161A425A8826A000B319F /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4161A325A8826A000B319F /* SceneViewController.swift */; };
+		EA4161A725A88697000B319F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EA4161A625A88697000B319F /* art.scnassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +27,9 @@
 		6179CE8A1F5EFD6000F1B690 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6179CE8C1F5EFD6000F1B690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		617D3F651F6185C300272919 /* Drone.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; path = Drone.dae; sourceTree = "<group>"; };
-		617D3F661F61873B00272919 /* Drone.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Drone.scn; sourceTree = "<group>"; };
+		EA4161A325A8826A000B319F /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
+		EA4161A625A88697000B319F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		EA4161AA25A88E12000B319F /* Drone.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Drone.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +65,12 @@
 				6179CE801F5EFD6000F1B690 /* AppDelegate.swift */,
 				6179CE821F5EFD6000F1B690 /* ViewController.swift */,
 				6179CE841F5EFD6000F1B690 /* Main.storyboard */,
+				EA4161A625A88697000B319F /* art.scnassets */,
 				617D3F601F6182E900272919 /* Objects */,
 				6179CE871F5EFD6000F1B690 /* Assets.xcassets */,
 				6179CE891F5EFD6000F1B690 /* LaunchScreen.storyboard */,
 				6179CE8C1F5EFD6000F1B690 /* Info.plist */,
+				EA4161A325A8826A000B319F /* SceneViewController.swift */,
 			);
 			path = ARKitExample;
 			sourceTree = "<group>";
@@ -73,8 +78,8 @@
 		617D3F601F6182E900272919 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				EA4161AA25A88E12000B319F /* Drone.scn */,
 				617D3F651F6185C300272919 /* Drone.dae */,
-				617D3F661F61873B00272919 /* Drone.scn */,
 				616C11931F62D7150002A468 /* Drone.swift */,
 			);
 			path = Objects;
@@ -140,8 +145,8 @@
 			files = (
 				6179CE8B1F5EFD6000F1B690 /* LaunchScreen.storyboard in Resources */,
 				6179CE881F5EFD6000F1B690 /* Assets.xcassets in Resources */,
+				EA4161A725A88697000B319F /* art.scnassets in Resources */,
 				6179CE861F5EFD6000F1B690 /* Main.storyboard in Resources */,
-				617D3F671F61873B00272919 /* Drone.scn in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6106C6C61F7A329600E87486 /* Drone.swift in Sources */,
+				EA4161A425A8826A000B319F /* SceneViewController.swift in Sources */,
 				6179CE831F5EFD6000F1B690 /* ViewController.swift in Sources */,
 				6179CE811F5EFD6000F1B690 /* AppDelegate.swift in Sources */,
 			);

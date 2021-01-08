@@ -8,11 +8,6 @@
 
 import ARKit
 
-let kStartingPosition = SCNVector3(0, 0, -0.6)
-let kAnimationDurationMoving: TimeInterval = 0.2
-let kMovingLengthPerLoop: CGFloat = 0.05
-let kRotationRadianPerLoop: CGFloat = 0.2
-
 class ViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
     
