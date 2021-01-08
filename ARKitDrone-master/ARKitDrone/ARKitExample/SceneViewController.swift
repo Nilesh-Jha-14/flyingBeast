@@ -8,23 +8,37 @@
 
 import ARKit
 import CoreMotion
-
+import Combine
 //let kStartingPosition = SCNVector3(0, 0, -0.6)
 //let kAnimationDurationMoving: TimeInterval = 0.2
 //let kMovingLengthPerLoop: CGFloat = 0.5
 //let kRotationRadianPerLoop: CGFloat = 0.2
 
-let kStartingPosition = SCNVector3(0, 0, 0.6)
+let kStartingPosition = SCNVector3(0, 5, 0)
 let kAnimationDurationMoving: TimeInterval = 0.2
 let kMovingLengthPerLoop: CGFloat = 0.5
 let kRotationRadianPerLoop: CGFloat = 0.2
 
 class SceneViewController: UIViewController {
+    private var bag = Set<AnyCancellable>()
+    @IBOutlet weak var motionPane1: MotionControlPane!
+    @IBOutlet weak var motionPane2: MotionControlPane!
+
+    @IBOutlet weak var motion1vertConstraint: NSLayoutConstraint!
+    @IBOutlet weak var motion1horizConstraint: NSLayoutConstraint!
+    @IBOutlet weak var motion2vertConstraint: NSLayoutConstraint!
+    @IBOutlet weak var motion2horizConstraint: NSLayoutConstraint!
+
+    @IBOutlet private weak var motionControl2: MotionControl!
+    @IBOutlet private weak var motionControl1: MotionControl!
+
+
+    
     @IBOutlet var sceneView: SCNView!
     let CategoryTree = 2
     var scene:SCNScene!
 
-    var droneNode = Drone()
+    var droneNode: SCNNode!
     var selfieStickNode:SCNNode!
 
     var motion = MotionHelper()
@@ -33,9 +47,41 @@ class SceneViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        motionPane1.reset()
+        motionPane2.reset()
+
+        hookupMotionControls()
+
         setupScene()
         addDrone()
         setupNodes()
+    }
+
+    private func hookupMotionControls() {
+        motionPane1.motionControl = motionControl1
+        motionPane1.horizConstraint = motion1horizConstraint
+        motionPane1.vertConstraint = motion1vertConstraint
+
+        motionPane2.motionControl = motionControl2
+        motionPane2.horizConstraint = motion2horizConstraint
+        motionPane2.vertConstraint = motion2vertConstraint
+        motionPane2.motionControlAlignment = .right
+
+        motionControl1.name = "links"
+        motionControl2.name = "rechts"
+
+        motionControl1.delegate = self
+        motionControl2.delegate = self
+
+        motionPane1.cancelledTouches.sink { [weak self] in
+            self?.droneNode.removeAllActions()
+        }
+        .store(in: &bag)
+
+        motionPane2.cancelledTouches.sink { [weak self] in
+            self?.droneNode.removeAllActions()
+        }
+        .store(in: &bag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,81 +110,82 @@ class SceneViewController: UIViewController {
     }
 
     func addDrone() {
-        droneNode.loadModel()
-        droneNode.position = kStartingPosition
-        droneNode.rotation = SCNVector4Zero
-        sceneView.scene?.rootNode.addChildNode(droneNode)
+//        droneNode.loadModel()
+//        droneNode.position = kStartingPosition
+//        droneNode.rotation = SCNVector4Zero
+//        sceneView.scene?.rootNode.addChildNode(droneNode)
     }
 
 
     func setupNodes() {
-        //droneNode = scene.rootNode.childNode(withName: "ball", recursively: true)!
+        droneNode = scene.rootNode.childNode(withName: "drone", recursively: true)!
         droneNode.physicsBody?.contactTestBitMask = CategoryTree
         selfieStickNode = scene.rootNode.childNode(withName: "selfieStick", recursively: true)!
     }
 
 
     // MARK: - actions
-    @IBAction func upLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func upLongPressed() {
         let action = SCNAction.moveBy(x: 0, y: kMovingLengthPerLoop, z: 0, duration: kAnimationDurationMoving)
-        execute(action: action, sender: sender)
+        execute(action: action)
     }
 
-    @IBAction func downLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func downLongPressed() {
         let action = SCNAction.moveBy(x: 0, y: -kMovingLengthPerLoop, z: 0, duration: kAnimationDurationMoving)
-        execute(action: action, sender: sender)
+        execute(action: action)
     }
 
-    @IBAction func moveLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func moveLeftLongPressed() {
         let x = -deltas().cos
         let z = deltas().sin
-        moveDrone(x: x, z: z, sender: sender)
+        moveDrone(x: x, z: z)
     }
 
-    @IBAction func moveRightLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func moveRightLongPressed() {
         let x = deltas().cos
         let z = -deltas().sin
-        moveDrone(x: x, z: z, sender: sender)
+        moveDrone(x: x, z: z)
     }
 
-    @IBAction func moveForwardLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func moveForwardLongPressed() {
         let x = -deltas().sin
         let z = -deltas().cos
-        moveDrone(x: x, z: z, sender: sender)
+        moveDrone(x: x, z: z)
     }
 
-    @IBAction func moveBackLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @IBAction func moveBackLongPressed() {
         let x = deltas().sin
         let z = deltas().cos
-        moveDrone(x: x, z: z, sender: sender)
+        moveDrone(x: x, z: z)
     }
 
-    @IBAction func rotateLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
-        rotateDrone(yRadian: kRotationRadianPerLoop, sender: sender)
+    func rotateLeftLongPressed() {
+        rotateDrone(yRadian: kRotationRadianPerLoop)
     }
 
-    @IBAction func rotateRightLongPressed(_ sender: UILongPressGestureRecognizer) {
-        rotateDrone(yRadian: -kRotationRadianPerLoop, sender: sender)
+    func rotateRightLongPressed() {
+        rotateDrone(yRadian: -kRotationRadianPerLoop)
     }
 
     // MARK: - private
-    private func rotateDrone(yRadian: CGFloat, sender: UILongPressGestureRecognizer) {
+    private func rotateDrone(yRadian: CGFloat) {
         let action = SCNAction.rotateBy(x: 0, y: yRadian, z: 0, duration: kAnimationDurationMoving)
-        execute(action: action, sender: sender)
+        execute(action: action)
     }
 
-    private func moveDrone(x: CGFloat, z: CGFloat, sender: UILongPressGestureRecognizer) {
+    private func moveDrone(x: CGFloat, z: CGFloat) {
         let action = SCNAction.moveBy(x: x, y: 0, z: z, duration: kAnimationDurationMoving)
-        execute(action: action, sender: sender)
+        execute(action: action)
     }
 
-    private func execute(action: SCNAction, sender: UILongPressGestureRecognizer) {
+    private func execute(action: SCNAction) {
         let loopAction = SCNAction.repeatForever(action)
-        if sender.state == .began {
-            droneNode.runAction(loopAction)
-        } else if sender.state == .ended {
-            droneNode.removeAllActions()
-        }
+        droneNode.runAction(loopAction)
+//        if sender.state == .began {
+//
+//        } else if sender.state == .ended {
+//            droneNode.removeAllActions()
+//        }
     }
 
     private func deltas() -> (sin: CGFloat, cos: CGFloat) {
@@ -201,10 +248,7 @@ extension SceneViewController : SCNPhysicsContactDelegate {
 
             contactNode.runAction(actionSequence)
         }
-
     }
-
-
 }
 
 
@@ -229,4 +273,50 @@ class MotionHelper {
 
         }
     }
+}
+
+extension SceneViewController: MotionControlDelegate {
+    func motionMoved(control: MotionControl, direction: StickDirection) {
+        // up, down, rotate
+        droneNode.removeAllActions()
+        if control == motionControl1 {
+            switch direction {
+            case .left:
+                rotateLeftLongPressed()
+            case .right:
+                rotateRightLongPressed()
+            case .up:
+                upLongPressed()
+            case .down:
+                downLongPressed()
+            }
+        } else {
+            switch direction {
+            case .left:
+                moveLeftLongPressed()
+            case .right:
+                moveRightLongPressed()
+            case .up:
+                moveForwardLongPressed()
+            case .down:
+                moveBackLongPressed()
+            }
+        }
+    }
+
+
+    func shouldBeginRecognizing(control: MotionControl, position: CGPoint) -> Bool {
+        return true
+    }
+
+    func cancelAllEvents() {
+        droneNode.removeAllActions()
+    }
+}
+
+struct StickInputUpdate {
+    let x1: Float?
+    let y1: Float?
+    let x2: Float?
+    let y2: Float?
 }
