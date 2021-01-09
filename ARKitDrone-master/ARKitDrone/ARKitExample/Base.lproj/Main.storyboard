@@ -261,44 +261,44 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MvB-Jb-9Sx" userLabel="Left Buttons View">
                                 <rect key="frame" x="0.0" y="634" width="180" height="180"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJq-dh-ihx">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJq-dh-ihx">
                                         <rect key="frame" x="55" y="0.0" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="Iie-Vh-QU6"/>
                                             <constraint firstAttribute="height" constant="70" id="yCz-Js-xE0"/>
                                         </constraints>
                                         <state key="normal" image="arrow_up"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="uparrowselected"/>
                                         <state key="highlighted" image="uparrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVA-Lq-opu">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVA-Lq-opu">
                                         <rect key="frame" x="55" y="110" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="OPt-mN-7om"/>
                                             <constraint firstAttribute="width" constant="70" id="PAu-YL-Xph"/>
                                         </constraints>
                                         <state key="normal" image="arrow_down"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="bottomarrowselected"/>
                                         <state key="highlighted" image="bottomarrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DyS-k9-1gU">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DyS-k9-1gU">
                                         <rect key="frame" x="110" y="55" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="Uod-uq-FkB"/>
                                             <constraint firstAttribute="height" constant="70" id="ptM-eV-h4t"/>
                                         </constraints>
                                         <state key="normal" image="arrow_right"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="rightarrowselected"/>
                                         <state key="highlighted" image="rightarrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNy-iU-Upj">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNy-iU-Upj">
                                         <rect key="frame" x="0.0" y="55" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="YuB-WU-Cpv"/>
                                             <constraint firstAttribute="width" constant="70" id="gw2-vU-Xw9"/>
                                         </constraints>
                                         <state key="normal" image="arrow_left"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="leftarrowselected"/>
                                         <state key="highlighted" image="leftarrowselected"/>
                                     </button>
                                 </subviews>
@@ -318,44 +318,44 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vA6-XA-dko" userLabel="Right Buttons View">
                                 <rect key="frame" x="994" y="634" width="180" height="180"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-sB-6t1">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-sB-6t1">
                                         <rect key="frame" x="55" y="0.0" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="InB-oW-Sbw"/>
                                             <constraint firstAttribute="width" constant="70" id="eWm-25-HIh"/>
                                         </constraints>
                                         <state key="normal" image="arrow_up"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="uparrowselected"/>
                                         <state key="highlighted" image="uparrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9pB-Jy-xWc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9pB-Jy-xWc">
                                         <rect key="frame" x="55" y="110" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="2Jx-C9-JCC"/>
                                             <constraint firstAttribute="width" constant="70" id="OV9-At-kOe"/>
                                         </constraints>
                                         <state key="normal" image="arrow_down"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="bottomarrowselected"/>
                                         <state key="highlighted" image="bottomarrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cER-re-kWO">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cER-re-kWO">
                                         <rect key="frame" x="110" y="55" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="GU5-Qk-yNo"/>
                                             <constraint firstAttribute="width" constant="70" id="lZ4-5h-EX9"/>
                                         </constraints>
                                         <state key="normal" image="arrow_right"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="rightarrowselected"/>
                                         <state key="highlighted" image="rightarrowselected"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v0v-4e-EDn">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v0v-4e-EDn">
                                         <rect key="frame" x="0.0" y="55" width="70" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="Tmy-bq-Q5c"/>
                                             <constraint firstAttribute="width" constant="70" id="pcd-Rz-qK5"/>
                                         </constraints>
                                         <state key="normal" image="arrow_left"/>
-                                        <state key="selected" image="arrow_down"/>
+                                        <state key="selected" image="leftarrowselected"/>
                                         <state key="highlighted" image="leftarrowselected"/>
                                     </button>
                                 </subviews>
@@ -400,8 +400,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lAX-w8-Ol9" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yn1-Gj-U2b">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yn1-Gj-U2b">
                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="70" id="Q3k-rn-6CU"/>
                         <constraint firstAttribute="width" constant="70" id="mRp-Xe-KC4"/>
@@ -419,10 +420,10 @@
         <image name="arrow_left" width="60" height="60"/>
         <image name="arrow_right" width="60" height="60"/>
         <image name="arrow_up" width="60" height="60"/>
-        <image name="bottomarrowselected" width="32" height="32"/>
-        <image name="leftarrowselected" width="32" height="32"/>
-        <image name="rightarrowselected" width="32" height="32"/>
-        <image name="uparrowselected" width="32" height="32"/>
+        <image name="bottomarrowselected" width="64" height="64"/>
+        <image name="leftarrowselected" width="64" height="64"/>
+        <image name="rightarrowselected" width="64" height="64"/>
+        <image name="uparrowselected" width="64" height="64"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

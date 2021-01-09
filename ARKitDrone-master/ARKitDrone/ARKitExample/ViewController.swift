@@ -71,6 +71,15 @@ class ViewController: UIViewController {
     var rightCollisionNode: SCNNode!
 
     var activeCollisionsBitMask:Int = 0
+    var longPress: UILongPressGestureRecognizer?
+    var longPress1: UILongPressGestureRecognizer?
+    var longPress2: UILongPressGestureRecognizer?
+    var longPress3: UILongPressGestureRecognizer?
+    var longPress4: UILongPressGestureRecognizer?
+    var longPress5: UILongPressGestureRecognizer?
+    var longPress6: UILongPressGestureRecognizer?
+    var longPress7: UILongPressGestureRecognizer?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,31 +92,31 @@ class ViewController: UIViewController {
         setupGestures()
         setupSounds()
         game.state = .tapToPlay
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(upLongPressed(_:)))
-               self.upButtonLeftSide.addGestureRecognizer(longPress)
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(upLongPressed(_:)))
+        self.upButtonLeftSide.addGestureRecognizer(longPress!)
 
-        let longPress1 = UILongPressGestureRecognizer(target: self, action: #selector(downLongPressed(_:)))
-               self.bottomButtonLeftSide.addGestureRecognizer(longPress1)
+        longPress1 = UILongPressGestureRecognizer(target: self, action: #selector(downLongPressed(_:)))
+        self.bottomButtonLeftSide.addGestureRecognizer(longPress1!)
 
-        let longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(moveLeftLongPressed(_:)))
-               self.leftButtonLeftSide.addGestureRecognizer(longPress2)
+        longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(moveLeftLongPressed(_:)))
+        self.leftButtonLeftSide.addGestureRecognizer(longPress2!)
 
-        let longPress3 = UILongPressGestureRecognizer(target: self, action: #selector(moveRightLongPressed(_:)))
-               self.rightButtonLeftSide.addGestureRecognizer(longPress3)
+        longPress3 = UILongPressGestureRecognizer(target: self, action: #selector(moveRightLongPressed(_:)))
+        self.rightButtonLeftSide.addGestureRecognizer(longPress3!)
 
 
 
-        let longPress4 = UILongPressGestureRecognizer(target: self, action: #selector(moveForwardLongPressed(_:)))
-               self.upButtonRightSide.addGestureRecognizer(longPress4)
+        longPress4 = UILongPressGestureRecognizer(target: self, action: #selector(moveForwardLongPressed(_:)))
+        self.upButtonRightSide.addGestureRecognizer(longPress4!)
 
-        let longPress5 = UILongPressGestureRecognizer(target: self, action: #selector(moveBackLongPressed(_:)))
-               self.bottomButtonRightSide.addGestureRecognizer(longPress5)
+        longPress5 = UILongPressGestureRecognizer(target: self, action: #selector(moveBackLongPressed(_:)))
+        self.bottomButtonRightSide.addGestureRecognizer(longPress5!)
 
-        let longPress6 = UILongPressGestureRecognizer(target: self, action: #selector(rotateLeftLongPressed(_:)))
-               self.leftButtonRightSide.addGestureRecognizer(longPress6)
+        longPress6 = UILongPressGestureRecognizer(target: self, action: #selector(rotateLeftLongPressed(_:)))
+        self.leftButtonRightSide.addGestureRecognizer(longPress6!)
 
-        let longPress7 = UILongPressGestureRecognizer(target: self, action: #selector(rotateRightLongPressed(_:)))
-               self.rightButtonRightSide.addGestureRecognizer(longPress7)
+        longPress7 = UILongPressGestureRecognizer(target: self, action: #selector(rotateRightLongPressed(_:)))
+        self.rightButtonRightSide.addGestureRecognizer(longPress7!)
     }
 
     func setupScenes() {
@@ -434,6 +443,29 @@ class ViewController: UIViewController {
 
     private func execute(action: SCNAction, sender: UILongPressGestureRecognizer) {
         let loopAction = SCNAction.repeatForever(action)
+        switch sender {
+        case longPress:
+            upButtonLeftSide.isSelected = sender.state == .began
+        case longPress1:
+            bottomButtonLeftSide.isSelected = sender.state == .began
+        case longPress2:
+            leftButtonLeftSide.isSelected = sender.state == .began
+        case longPress3:
+            rightButtonLeftSide.isSelected = sender.state == .began
+
+        case longPress4:
+            upButtonRightSide.isSelected = sender.state == .began
+        case longPress5:
+            bottomButtonRightSide.isSelected = sender.state == .began
+        case longPress6:
+            leftButtonRightSide.isSelected = sender.state == .began
+        case longPress7:
+            rightButtonRightSide.isSelected = sender.state == .began
+
+        default :
+            break
+        }
+
         if sender.state == .began {
             droneNode.runAction(loopAction)
         } else if sender.state == .ended {
