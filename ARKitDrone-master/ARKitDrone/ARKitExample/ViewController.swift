@@ -10,6 +10,11 @@ import UIKit
 import SceneKit
 import SpriteKit
 
+let kStartingPosition = SCNVector3(0, 5, 0)
+let kAnimationDurationMoving: TimeInterval = 0.2
+let kMovingLengthPerLoop: CGFloat = 0.2
+let kRotationRadianPerLoop: CGFloat = 0.2
+
 class ViewController: UIViewController {
     @IBOutlet var mainSceneView: UIView!
     @IBOutlet var leftStickView: UIView!
@@ -61,7 +66,7 @@ class ViewController: UIViewController {
         setupScenes()
         setupNodes()
         setupActions()
-        setupTraffic()
+        //setupTraffic()
         setupGestures()
         setupSounds()
         game.state = .tapToPlay
@@ -129,7 +134,7 @@ class ViewController: UIViewController {
         let goodByePig = SCNAction.group([spinAround, riseUp, fadeOut])
         let gameOver = SCNAction.run { (node:SCNNode) -> Void in
             self.pigNode.position = SCNVector3(x:0, y:0, z:0)
-            self.droneNode.position = SCNVector3(x:0, y:0, z:0)
+            self.droneNode.position = SCNVector3(x:0, y:2, z:0)
             self.pigNode.opacity = 1.0
             self.startSplash()
         }
@@ -243,19 +248,21 @@ class ViewController: UIViewController {
 
     func startSplash() {
         gameScene.isPaused = true
+        DispatchQueue.main.async {
+            self.leftStickView.isHidden = true
+            self.rightStickView.isHidden = true
+        }
         let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
         scnView.present(splashScene, with: transition, incomingPointOfView: nil, completionHandler: {
             self.game.state = .tapToPlay
             self.setupSounds()
             self.splashScene.isPaused = false
-            self.leftStickView.isHidden = true
-            self.rightStickView.isHidden = true
         })
     }
 
     func startGame() {
         resetCoins()
-        setupTraffic()
+        //setupTraffic()
         splashScene.isPaused = true
         let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
         scnView.present(gameScene, with: transition, incomingPointOfView: nil, completionHandler: {
@@ -288,6 +295,12 @@ class ViewController: UIViewController {
 
     func updatePositions() {
         collisionNode.position = droneNode.position
+        pigNode.position = droneNode.position
+
+        if droneNode.position.y < 0.5 {
+            droneNode.removeAllActions()
+            droneNode.position.y = 0.5
+        }
 
         let lerpX = (droneNode.position.x - cameraFollowNode.position.x) * 0.05
         let lerpZ = (droneNode.position.z - cameraFollowNode.position.z) * 0.05
@@ -424,9 +437,11 @@ extension ViewController : SCNPhysicsContactDelegate {
             contactNode = contact.nodeA
         }
 
-        if contactNode.physicsBody?.categoryBitMask == BitMaskVehicle {
+        if contactNode.physicsBody?.categoryBitMask == BitMaskVehicle ||
+            contactNode.physicsBody?.categoryBitMask == BitMaskHouse {
             game.playSound(node: pigNode, name: "Crash")
-            stopGame()
+            //stopGame()
+            droneNode.removeAllActions()
         }
 
         if contactNode.physicsBody?.categoryBitMask == BitMaskCoin {

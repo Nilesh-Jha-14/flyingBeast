@@ -9,15 +9,6 @@
 import ARKit
 import CoreMotion
 import Combine
-//let kStartingPosition = SCNVector3(0, 0, -0.6)
-//let kAnimationDurationMoving: TimeInterval = 0.2
-//let kMovingLengthPerLoop: CGFloat = 0.5
-//let kRotationRadianPerLoop: CGFloat = 0.2
-
-let kStartingPosition = SCNVector3(0, 5, 0)
-let kAnimationDurationMoving: TimeInterval = 0.2
-let kMovingLengthPerLoop: CGFloat = 0.5
-let kRotationRadianPerLoop: CGFloat = 0.2
 
 class SceneViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
