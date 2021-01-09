@@ -15,6 +15,7 @@ let kAnimationDurationMoving: TimeInterval = 0.2
 let kMovingLengthPerLoop: CGFloat = 0.2
 let kRotationRadianPerLoop: CGFloat = 0.2
 
+
 class ViewController: UIViewController {
     @IBOutlet var mainSceneView: UIView!
     @IBOutlet var leftStickView: UIView!
@@ -29,6 +30,18 @@ class ViewController: UIViewController {
     let BitMaskCoin = 128
     let BitMaskHouse = 256
 
+    
+    @IBOutlet weak var upButtonLeftSide: UIButton!
+    @IBOutlet weak var bottomButtonLeftSide: UIButton!
+    @IBOutlet weak var rightButtonLeftSide: UIButton!
+    @IBOutlet weak var leftButtonLeftSide: UIButton!
+
+
+    @IBOutlet weak var upButtonRightSide: UIButton!
+    @IBOutlet weak var bottomButtonRightSide: UIButton!
+    @IBOutlet weak var rightButtonRightSide: UIButton!
+    @IBOutlet weak var leftButtonRightSide: UIButton!
+    
     let game = GameHelper.sharedInstance
     var scnView: SCNView!
     var gameScene: SCNScene!
@@ -70,6 +83,31 @@ class ViewController: UIViewController {
         setupGestures()
         setupSounds()
         game.state = .tapToPlay
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(upLongPressed(_:)))
+               self.upButtonLeftSide.addGestureRecognizer(longPress)
+
+        let longPress1 = UILongPressGestureRecognizer(target: self, action: #selector(downLongPressed(_:)))
+               self.bottomButtonLeftSide.addGestureRecognizer(longPress1)
+
+        let longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(moveLeftLongPressed(_:)))
+               self.leftButtonLeftSide.addGestureRecognizer(longPress2)
+
+        let longPress3 = UILongPressGestureRecognizer(target: self, action: #selector(moveRightLongPressed(_:)))
+               self.rightButtonLeftSide.addGestureRecognizer(longPress3)
+
+
+
+        let longPress4 = UILongPressGestureRecognizer(target: self, action: #selector(moveForwardLongPressed(_:)))
+               self.upButtonRightSide.addGestureRecognizer(longPress4)
+
+        let longPress5 = UILongPressGestureRecognizer(target: self, action: #selector(moveBackLongPressed(_:)))
+               self.bottomButtonRightSide.addGestureRecognizer(longPress5)
+
+        let longPress6 = UILongPressGestureRecognizer(target: self, action: #selector(rotateLeftLongPressed(_:)))
+               self.leftButtonRightSide.addGestureRecognizer(longPress6)
+
+        let longPress7 = UILongPressGestureRecognizer(target: self, action: #selector(rotateRightLongPressed(_:)))
+               self.rightButtonRightSide.addGestureRecognizer(longPress7)
     }
 
     func setupScenes() {
@@ -335,6 +373,12 @@ class ViewController: UIViewController {
     override var shouldAutorotate : Bool { return false }
 
     // MARK: - actions
+
+
+
+
+
+
     @IBAction func upLongPressed(_ sender: UILongPressGestureRecognizer) {
         let action = SCNAction.moveBy(x: 0, y: kMovingLengthPerLoop, z: 0, duration: kAnimationDurationMoving)
         execute(action: action, sender: sender)
