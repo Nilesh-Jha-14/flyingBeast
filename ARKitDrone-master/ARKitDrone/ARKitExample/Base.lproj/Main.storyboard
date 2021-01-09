@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="I3K-S6-tzy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="I3K-S6-tzy">
     <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -258,6 +258,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Dx-k8-gbR">
+                                <rect key="frame" x="517" y="714" width="160" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4tc-e7-0iN">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="icoDirectLanding" backgroundImage="btnBtnBgDeselectedOutline30"/>
+                                        <connections>
+                                            <action selector="landbuttonTapped:" destination="I3K-S6-tzy" eventType="touchUpInside" id="jRV-Ay-1qs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhp-bc-pZ0">
+                                        <rect key="frame" x="80" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="icoTakeOff" backgroundImage="btnBtnBgDeselectedOutline30"/>
+                                        <connections>
+                                            <action selector="takeoffTapped:" destination="I3K-S6-tzy" eventType="touchUpInside" id="LRQ-W2-4nV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MvB-Jb-9Sx" userLabel="Left Buttons View">
                                 <rect key="frame" x="0.0" y="634" width="180" height="180"/>
                                 <subviews>
@@ -380,14 +399,17 @@
                             <constraint firstAttribute="trailing" secondItem="rGb-y0-0nG" secondAttribute="trailing" id="IfN-Bt-Ly1"/>
                             <constraint firstAttribute="bottom" secondItem="rGb-y0-0nG" secondAttribute="bottom" id="Ryj-ww-5cH"/>
                             <constraint firstItem="rGb-y0-0nG" firstAttribute="top" secondItem="Biy-f2-hph" secondAttribute="bottom" id="Zjy-Lt-AUL"/>
+                            <constraint firstItem="1Dx-k8-gbR" firstAttribute="centerX" secondItem="BEG-sg-Abu" secondAttribute="centerX" id="bbg-CU-q7W"/>
                             <constraint firstItem="JQk-fo-2sV" firstAttribute="top" secondItem="MvB-Jb-9Sx" secondAttribute="bottom" id="e87-Eb-JG9"/>
                             <constraint firstItem="rGb-y0-0nG" firstAttribute="leading" secondItem="BEG-sg-Abu" secondAttribute="leading" id="jQf-zy-1bu"/>
                             <constraint firstItem="JQk-fo-2sV" firstAttribute="top" secondItem="vA6-XA-dko" secondAttribute="bottom" id="kpr-rS-4Zo"/>
+                            <constraint firstItem="JQk-fo-2sV" firstAttribute="top" secondItem="1Dx-k8-gbR" secondAttribute="bottom" constant="20" id="xxo-tk-JdL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomButtonLeftSide" destination="oVA-Lq-opu" id="Q4f-qB-0qh"/>
                         <outlet property="bottomButtonRightSide" destination="9pB-Jy-xWc" id="Q4c-j2-UkS"/>
+                        <outlet property="landButton" destination="4tc-e7-0iN" id="vlv-Pi-JRT"/>
                         <outlet property="leftButtonLeftSide" destination="DNy-iU-Upj" id="zWD-39-3lX"/>
                         <outlet property="leftButtonRightSide" destination="v0v-4e-EDn" id="dEW-Ne-HOq"/>
                         <outlet property="leftStickView" destination="MvB-Jb-9Sx" id="bf4-f5-amh"/>
@@ -395,6 +417,7 @@
                         <outlet property="rightButtonLeftSide" destination="DyS-k9-1gU" id="yVa-6C-sBl"/>
                         <outlet property="rightButtonRightSide" destination="cER-re-kWO" id="laf-zG-3gb"/>
                         <outlet property="rightStickView" destination="vA6-XA-dko" id="muz-Mb-g9O"/>
+                        <outlet property="takeoffButton" destination="mhp-bc-pZ0" id="ogV-B6-RVT"/>
                         <outlet property="upButtonLeftSide" destination="nJq-dh-ihx" id="YQn-q8-vI7"/>
                         <outlet property="upButtonRightSide" destination="aTK-sB-6t1" id="A46-Ps-I7j"/>
                     </connections>
@@ -421,6 +444,9 @@
         <image name="arrow_right" width="60" height="60"/>
         <image name="arrow_up" width="60" height="60"/>
         <image name="bottomarrowselected" width="64" height="64"/>
+        <image name="btnBtnBgDeselectedOutline30" width="80" height="80"/>
+        <image name="icoDirectLanding" width="50" height="50"/>
+        <image name="icoTakeOff" width="25" height="25"/>
         <image name="leftarrowselected" width="64" height="64"/>
         <image name="rightarrowselected" width="64" height="64"/>
         <image name="uparrowselected" width="64" height="64"/>

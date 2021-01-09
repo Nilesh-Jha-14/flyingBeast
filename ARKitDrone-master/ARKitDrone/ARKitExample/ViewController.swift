@@ -15,11 +15,18 @@ let kAnimationDurationMoving: TimeInterval = 0.2
 let kMovingLengthPerLoop: CGFloat = 0.2
 let kRotationRadianPerLoop: CGFloat = 0.2
 
+enum DroneState {
+    case onGround, inAir, none
+}
+
 
 class ViewController: UIViewController {
     @IBOutlet var mainSceneView: UIView!
     @IBOutlet var leftStickView: UIView!
     @IBOutlet var rightStickView: UIView!
+    @IBOutlet weak var takeoffButton: UIButton!
+    @IBOutlet weak var landButton: UIButton!
+
     let BitMaskPig = 1
     let BitMaskVehicle = 2
     let BitMaskObstacle = 4
@@ -69,6 +76,7 @@ class ViewController: UIViewController {
     var backCollisionNode: SCNNode!
     var leftCollisionNode: SCNNode!
     var rightCollisionNode: SCNNode!
+    var droneState: DroneState = .onGround
 
     var activeCollisionsBitMask:Int = 0
     var longPress: UILongPressGestureRecognizer?
@@ -85,6 +93,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.leftStickView.isHidden = true
         self.rightStickView.isHidden = true
+        self.takeoffButton.isHidden = true
+        self.landButton.isHidden = true
         setupScenes()
         setupNodes()
         setupActions()
@@ -98,10 +108,10 @@ class ViewController: UIViewController {
         longPress1 = UILongPressGestureRecognizer(target: self, action: #selector(downLongPressed(_:)))
         self.bottomButtonLeftSide.addGestureRecognizer(longPress1!)
 
-        longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(moveLeftLongPressed(_:)))
+        longPress2 = UILongPressGestureRecognizer(target: self, action: #selector(rotateLeftLongPressed(_:)))
         self.leftButtonLeftSide.addGestureRecognizer(longPress2!)
 
-        longPress3 = UILongPressGestureRecognizer(target: self, action: #selector(moveRightLongPressed(_:)))
+        longPress3 = UILongPressGestureRecognizer(target: self, action: #selector(rotateRightLongPressed(_:)))
         self.rightButtonLeftSide.addGestureRecognizer(longPress3!)
 
 
@@ -112,10 +122,10 @@ class ViewController: UIViewController {
         longPress5 = UILongPressGestureRecognizer(target: self, action: #selector(moveBackLongPressed(_:)))
         self.bottomButtonRightSide.addGestureRecognizer(longPress5!)
 
-        longPress6 = UILongPressGestureRecognizer(target: self, action: #selector(rotateLeftLongPressed(_:)))
+        longPress6 = UILongPressGestureRecognizer(target: self, action: #selector(moveLeftLongPressed(_:)))
         self.leftButtonRightSide.addGestureRecognizer(longPress6!)
 
-        longPress7 = UILongPressGestureRecognizer(target: self, action: #selector(rotateRightLongPressed(_:)))
+        longPress7 = UILongPressGestureRecognizer(target: self, action: #selector(moveRightLongPressed(_:)))
         self.rightButtonRightSide.addGestureRecognizer(longPress7!)
     }
 
@@ -181,7 +191,7 @@ class ViewController: UIViewController {
         let goodByePig = SCNAction.group([spinAround, riseUp, fadeOut])
         let gameOver = SCNAction.run { (node:SCNNode) -> Void in
             self.pigNode.position = SCNVector3(x:0, y:0, z:0)
-            self.droneNode.position = SCNVector3(x:0, y:2, z:0)
+            self.droneNode.position = SCNVector3(x:0, y:0, z:0)
             self.pigNode.opacity = 1.0
             self.startSplash()
         }
@@ -298,6 +308,8 @@ class ViewController: UIViewController {
         DispatchQueue.main.async {
             self.leftStickView.isHidden = true
             self.rightStickView.isHidden = true
+            self.takeoffButton.isHidden = true
+            self.landButton.isHidden = true
         }
         let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
         scnView.present(splashScene, with: transition, incomingPointOfView: nil, completionHandler: {
@@ -319,6 +331,8 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.leftStickView.isHidden = false
                 self.rightStickView.isHidden = false
+                self.takeoffButton.isHidden = false
+                self.landButton.isHidden = false
             }
         })
     }
@@ -341,12 +355,16 @@ class ViewController: UIViewController {
     }
 
     func updatePositions() {
+        DispatchQueue.main.async {
+            self.takeoffButton.isEnabled = self.droneState == .onGround
+            self.landButton.isEnabled = self.droneState == .inAir
+        }
         collisionNode.position = droneNode.position
         pigNode.position = droneNode.position
 
-        if droneNode.position.y < 0.5 {
+        if droneNode.position.y < 0.3 {
             droneNode.removeAllActions()
-            droneNode.position.y = 0.5
+            droneNode.position.y = 0.3
         }
 
         let lerpX = (droneNode.position.x - cameraFollowNode.position.x) * 0.05
@@ -382,11 +400,6 @@ class ViewController: UIViewController {
     override var shouldAutorotate : Bool { return false }
 
     // MARK: - actions
-
-
-
-
-
 
     @IBAction func upLongPressed(_ sender: UILongPressGestureRecognizer) {
         let action = SCNAction.moveBy(x: 0, y: kMovingLengthPerLoop, z: 0, duration: kAnimationDurationMoving)
@@ -428,6 +441,21 @@ class ViewController: UIViewController {
 
     @IBAction func rotateRightLongPressed(_ sender: UILongPressGestureRecognizer) {
         rotateDrone(yRadian: -kRotationRadianPerLoop, sender: sender)
+    }
+
+    @IBAction func takeoffTapped(_ sender: UIButton) {
+        guard droneState == .onGround else {
+            return
+        }
+        takeoffDrone()
+    }
+
+    @IBAction func landbuttonTapped(_ sender: UIButton) {
+        guard droneState == .inAir else {
+            return
+        }
+        droneNode.removeAllActions()
+        landDrone()
     }
 
     // MARK: - private
@@ -476,6 +504,23 @@ class ViewController: UIViewController {
     private func deltas() -> (sin: CGFloat, cos: CGFloat) {
         return (sin: kMovingLengthPerLoop * CGFloat(sin(droneNode.eulerAngles.y)), cos: kMovingLengthPerLoop * CGFloat(cos(droneNode.eulerAngles.y)))
     }
+
+    private func landDrone() {
+        self.droneState = .none
+        let yoff  = 0.3 - droneNode.position.y
+        let action = SCNAction.moveBy(x: 0, y: CGFloat(yoff), z: 0, duration: 1)
+        droneNode.runAction(SCNAction.repeat(action, count: 1)) {
+            self.droneState = .onGround
+        }
+    }
+
+    private func takeoffDrone() {
+        self.droneState = .none
+        let action = SCNAction.moveBy(x: 0, y: 2, z: 0, duration: 1)
+        droneNode.runAction(SCNAction.repeat(action, count: 1)) {
+            self.droneState = .inAir
+        }
+    }
 }
 
 extension ViewController : SCNSceneRendererDelegate {
@@ -487,6 +532,10 @@ extension ViewController : SCNSceneRendererDelegate {
         game.updateHUD()
         updatePositions()
         updateTraffic()
+        DispatchQueue.main.async {
+            self.leftStickView.isHidden = self.droneState != .inAir
+            self.rightStickView.isHidden = self.droneState != .inAir
+        }
     }
 }
 
