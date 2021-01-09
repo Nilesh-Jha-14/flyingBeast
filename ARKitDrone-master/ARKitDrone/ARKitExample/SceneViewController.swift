@@ -227,7 +227,7 @@ extension SceneViewController : SCNPhysicsContactDelegate {
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         var contactNode:SCNNode!
 
-        if contact.nodeA.name == "ball" {
+        if contact.nodeA.name == "drone" {
             contactNode = contact.nodeB
         }else{
             contactNode = contact.nodeA
