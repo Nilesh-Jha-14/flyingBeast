@@ -366,10 +366,16 @@ class ViewController: UIViewController {
             droneNode.removeAllActions()
             droneNode.position.y = 0.3
         }
+        else if droneNode.position.y > 10 {
+            droneNode.removeAllActions()
+            droneNode.position.y = 10
+        }
 
         let lerpX = (droneNode.position.x - cameraFollowNode.position.x) * 0.05
+        let lerpY = (droneNode.position.y - cameraFollowNode.position.y) * 0.05
         let lerpZ = (droneNode.position.z - cameraFollowNode.position.z) * 0.05
         cameraFollowNode.position.x += lerpX
+        cameraFollowNode.position.y += lerpY
         cameraFollowNode.position.z += lerpZ
 
         lightFollowNode.position = cameraFollowNode.position
